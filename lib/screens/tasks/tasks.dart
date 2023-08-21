@@ -1,6 +1,7 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/screens/tasks/task%20item.dart';
+import 'package:todo/shared/network/firebase/firebase_function.dart';
 
 class Tasks extends StatelessWidget {
   const Tasks({super.key});
@@ -28,13 +29,25 @@ class Tasks extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return Task_item();
-            },
-            itemCount: 5,
-          ),
+        FutureBuilder(
+          future: Firebase_function.get_task(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Text("Somthing went wrong");
+            }
+            var tasks = snapshot.data!.docs.map((e) => e.data()).toList() ?? [];
+            return Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Task_item(tasks[index]);
+                },
+                itemCount: tasks.length,
+              ),
+            );
+          },
         )
       ],
     );

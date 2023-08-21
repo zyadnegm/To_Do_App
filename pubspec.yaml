@@ -39,6 +39,8 @@ dependencies:
   flutter_native_splash: ^2.3.2
   calendar_timeline: ^1.1.2
   flutter_slidable: ^3.0.0
+  firebase_core: ^2.15.1
+  cloud_firestore: ^4.8.5
 
 
 

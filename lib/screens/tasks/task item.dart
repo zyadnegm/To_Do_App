@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo/models/task_model.dart';
 import 'package:todo/shared/style/colors/app_color.dart';
 
 class Task_item extends StatelessWidget {
-  const Task_item({super.key});
+  Task_model task_model;
+
+  Task_item(this.task_model);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class Task_item extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Task Tittle"),
+                child: Text(task_model.tittle),
               ),
               Spacer(),
               Padding(
@@ -51,7 +54,7 @@ class Task_item extends StatelessWidget {
                 child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: task_model.isdond ? Colors.green : Colors.blue,
                         borderRadius: BorderRadius.circular(7)),
                     child: Icon(
                       Icons.done,
