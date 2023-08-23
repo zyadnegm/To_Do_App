@@ -96,9 +96,10 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
                   Task_model task = Task_model(
                       tittle: tittleControler.text,
                       details: detailsControler.text,
-                      date: selected_date.month);
-                  Firebase_function.add_task(task)
-                      .then((value) => Navigator.pop(context));
+                      date: DateUtils.dateOnly(selected_date)
+                          .millisecondsSinceEpoch);
+                  Firebase_function.add_task(task);
+                  Navigator.pop(context);
                 }
               },
               child: Text("Add task"))

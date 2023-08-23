@@ -3,19 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:todo/screens/tasks/task%20item.dart';
 import 'package:todo/shared/network/firebase/firebase_function.dart';
 
-class Tasks extends StatelessWidget {
-  const Tasks({super.key});
+class Tasks extends StatefulWidget {
+  @override
+  State<Tasks> createState() => _TasksState();
+}
+
+class _TasksState extends State<Tasks> {
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CalendarTimeline(
-          initialDate: DateTime.now(),
+          initialDate: selectedDate,
           firstDate: DateTime.now().subtract(Duration(days: 365)),
           lastDate: DateTime.now().add(Duration(days: 365)),
           onDateSelected: (date) {
-            print(date);
+            selectedDate = date;
+            setState(() {});
           },
           leftMargin: 20,
           monthColor: Colors.blueGrey,
@@ -23,14 +29,14 @@ class Tasks extends StatelessWidget {
           activeDayColor: Colors.white,
           activeBackgroundDayColor: Colors.redAccent[100],
           dotsColor: Color(0xFF333A47),
-          selectableDayPredicate: (date) => date.day != 23,
+          selectableDayPredicate: (date) => date.day != 20,
           locale: 'en_ISO',
         ),
         SizedBox(
           height: 8,
         ),
-        FutureBuilder(
-          future: Firebase_function.get_task(),
+        StreamBuilder(
+          stream: Firebase_function.get_task(selectedDate),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -39,6 +45,9 @@ class Tasks extends StatelessWidget {
               return Text("Somthing went wrong");
             }
             var tasks = snapshot.data!.docs.map((e) => e.data()).toList() ?? [];
+            if (tasks.isEmpty) {
+              return Center(child: Text("No tasks"));
+            }
             return Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {

@@ -13,14 +13,18 @@ class Home_layout extends StatefulWidget {
 
 class _Home_layoutState extends State<Home_layout> {
   int current_index = 0;
-  List<Widget> tabs = [Tasks(), Settings()];
+  String txt = "To Do List";
+  List<Widget> tabs = [Tasks(), Settings_screen()];
 
   @override
   Widget build(BuildContext context) {
+    if (current_index == 1) {
+      txt = "Settings";
+    }
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: Text("To Do List"),
+        title: Text(txt),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/models/task_model.dart';
+import 'package:todo/screens/Edit_screen.dart';
+import 'package:todo/shared/network/firebase/firebase_function.dart';
 import 'package:todo/shared/style/colors/app_color.dart';
 
 class Task_item extends StatelessWidget {
@@ -17,14 +19,18 @@ class Task_item extends StatelessWidget {
       child: Slidable(
         startActionPane: ActionPane(motion: BehindMotion(), children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {
+              Firebase_function.deleteData(task_model.id);
+            },
             backgroundColor: Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
             label: 'Delete',
           ),
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {
+              Navigator.pushNamed(context, Edit_screen.routeName);
+            },
             backgroundColor: primarycolor,
             foregroundColor: Colors.white,
             icon: Icons.edit,

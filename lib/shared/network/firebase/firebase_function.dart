@@ -20,7 +20,21 @@ class Firebase_function {
     return document.set(task);
   }
 
-  static Future<QuerySnapshot<Task_model>> get_task() {
-    return getTaskcollection().get();
+  static Stream<QuerySnapshot<Task_model>> get_task(DateTime date) {
+    return getTaskcollection()
+        .where("date", isEqualTo: date.millisecondsSinceEpoch)
+        .snapshots();
+  }
+
+  static Future<void> deleteData(String id) {
+    return getTaskcollection()
+        .doc(id)
+        .delete()
+        .then((value) => "data Deleted")
+        .catchError((error) => "Failed to delete user: $error");
+  }
+
+  static Future<void> uptadeData(String id, Task_model task_model) {
+    return getTaskcollection().doc(id).update(task_model.toJson());
   }
 }
