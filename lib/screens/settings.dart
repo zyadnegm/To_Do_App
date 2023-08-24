@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/my%20provider.dart';
 
-class Settings_screen extends StatefulWidget {
+class Settings_screen extends StatelessWidget {
   static const String routeName = "setting";
 
-  @override
-  State<Settings_screen> createState() => _Settings_screenState();
-}
-
-class _Settings_screenState extends State<Settings_screen> {
   List<String> lang = <String>["English", "Arabic"];
   String selectItem = "English";
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<MyProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,35 +36,43 @@ class _Settings_screenState extends State<Settings_screen> {
             width: 320,
             height: 50,
             child: DropdownButton(
-              value: selectItem,
+              value: pro.language == "ar" ? "Arabic" : "English",
               items: [
                 DropdownMenuItem<String>(
-                  value: 'English',
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'English',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                  value: selectItem,
+                  child: InkWell(
+                    onTap: () {
+                      pro.changeLanguage("en");
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "English",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 DropdownMenuItem<String>(
                   value: 'Arabic',
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Arabic',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                  child: InkWell(
+                    onTap: () {
+                      pro.changeLanguage("ar");
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Arabic",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
               ],
               onChanged: (String? value) {
-                setState(() {
-                  selectItem = value!;
-                });
+                selectItem = value!;
               },
               iconSize: 35,
               isExpanded: true,
@@ -104,7 +111,7 @@ class _Settings_screenState extends State<Settings_screen> {
                     child: Text(
                       'Light',
                       style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                      TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                     ),
                   ),
                 ),
@@ -115,15 +122,13 @@ class _Settings_screenState extends State<Settings_screen> {
                     child: Text(
                       'Dark',
                       style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                      TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                     ),
                   ),
                 ),
               ],
               onChanged: (String? value) {
-                setState(() {
-                  selectItem = value!;
-                });
+                selectItem = value!;
               },
               iconSize: 35,
               isExpanded: true,
