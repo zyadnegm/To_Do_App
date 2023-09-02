@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/my%20provider.dart';
+import 'package:todo/shared/style/colors/app_color.dart';
 
 class Settings_screen extends StatelessWidget {
   static const String routeName = "setting";
 
   List<String> lang = <String>["English", "Arabic"];
   String selectItem = "English";
+  bool isdarkmode = false;
 
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor:
+          pro.themeData == ThemeMode.dark ? Color(0Xff060E1E) : Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 30, top: 70),
             child: Text(
-              "Language",
+              AppLocalizations.of(context)!.language,
               style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -32,7 +36,8 @@ class Settings_screen extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 30, top: 15),
-            color: Colors.white,
+            color:
+                pro.themeData == ThemeMode.dark ? primarycolor : Colors.white,
             width: 320,
             height: 50,
             child: DropdownButton(
@@ -49,7 +54,9 @@ class Settings_screen extends StatelessWidget {
                       child: Text(
                         "English",
                         style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            color: Colors.black),
                       ),
                     ),
                   ),
@@ -82,59 +89,38 @@ class Settings_screen extends StatelessWidget {
           SizedBox(
             height: 90,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30, bottom: 6),
-            child: Text(
-              "Mode",
-              style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 30, top: 15),
-            color: Colors.white,
-            width: 320,
-            height: 50,
-            child: DropdownButton(
-              value: selectItem,
-              items: [
-                DropdownMenuItem<String>(
-                  value: 'English',
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Light',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                    ),
-                  ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  AppLocalizations.of(context)!.mode,
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: pro.themeData == ThemeMode.dark
+                          ? Colors.white
+                          : Colors.black),
                 ),
-                DropdownMenuItem<String>(
-                  value: 'Arabic',
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Dark',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                    ),
-                  ),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(right: 15, top: 20),
+                child: Switch(
+                  value: isdarkmode,
+                  onChanged: (value) {
+                    if (value) {
+                      pro.changeMode(ThemeMode.dark);
+                      isdarkmode = true;
+                    } else {
+                      pro.changeMode(ThemeMode.light);
+                      isdarkmode = false;
+                    }
+                  },
                 ),
-              ],
-              onChanged: (String? value) {
-                selectItem = value!;
-              },
-              iconSize: 35,
-              isExpanded: true,
-              underline: SizedBox(),
-            ),
-          ),
+              )
+            ],
+          )
         ],
       ),
     );

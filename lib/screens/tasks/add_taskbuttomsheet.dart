@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/shared/network/firebase/firebase_function.dart';
 
@@ -22,7 +23,7 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
           Padding(
             padding: const EdgeInsets.all(11),
             child: Text(
-              "Add New Task",
+              AppLocalizations.of(context)!.newtask,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -43,7 +44,7 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
               controller: tittleControler,
               decoration: InputDecoration(
                   border: const UnderlineInputBorder(),
-                  labelText: 'enter your task tittle ',
+                  labelText: AppLocalizations.of(context)!.titlelabel,
                   suffixStyle: TextStyle(
                       fontWeight: FontWeight.w800,
                       color: Color(0XffC8C9CB),
@@ -56,7 +57,7 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
               controller: detailsControler,
               decoration: InputDecoration(
                   border: const UnderlineInputBorder(),
-                  labelText: 'Task Details ',
+                  labelText: AppLocalizations.of(context)!.describtionlabel,
                   suffixStyle: TextStyle(
                       fontWeight: FontWeight.w800,
                       color: Color(0XffC8C9CB),
@@ -67,7 +68,7 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
             alignment: Alignment.topLeft,
             margin: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
             child: Text(
-              "Select time",
+              AppLocalizations.of(context)!.selecttime,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,

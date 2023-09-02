@@ -8,6 +8,8 @@ import 'package:todo/layout/home_layout.dart';
 import 'package:todo/my%20provider.dart';
 import 'package:todo/screens/Edit_screen.dart';
 import 'package:todo/screens/Example.dart';
+import 'package:todo/screens/login&&sign/login.dart';
+import 'package:todo/screens/login&&sign/sign%20in.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/shared/style/theming/my_theme.dart';
 
@@ -43,15 +45,18 @@ class MyApp extends StatelessWidget {
         Locale('ar'), // Spanish
       ],
       debugShowCheckedModeBanner: false,
-      initialRoute: Home_layout.routeName,
+      initialRoute: Login_screen.routeName,
       routes: {
         Home_layout.routeName: (context) => Home_layout(),
         Edit_screen.routeName: (context) => Edit_screen(),
         Settings_screen.routeName: (context) => Settings_screen(),
-        DropdownMenuApp_sreen.routeName: (context) => DropdownMenuApp_sreen()
+        DropdownMenuApp_sreen.routeName: (context) => DropdownMenuApp_sreen(),
+        Login_screen.routeName: (context) => Login_screen(),
+        SignIn_screen.routeName: (context) => SignIn_screen()
       },
       theme: My_theme.LightTheme,
       darkTheme: My_theme.darkTheme,
+      themeMode: pro.themeData,
     );
   }
 }

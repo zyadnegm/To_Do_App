@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/screens/Edit_screen.dart';
@@ -25,7 +26,7 @@ class Task_item extends StatelessWidget {
             backgroundColor: Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
-            label: 'Delete',
+            label: AppLocalizations.of(context)!.delete,
           ),
           SlidableAction(
             onPressed: (context) {
@@ -34,7 +35,7 @@ class Task_item extends StatelessWidget {
             backgroundColor: primarycolor,
             foregroundColor: Colors.white,
             icon: Icons.edit,
-            label: 'Edit',
+            label: AppLocalizations.of(context)!.edit,
           ),
         ]),
         child: Container(

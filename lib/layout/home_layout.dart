@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/my%20provider.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks/tasks.dart';
 
@@ -18,8 +21,9 @@ class _Home_layoutState extends State<Home_layout> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<MyProvider>(context);
     if (current_index == 1) {
-      txt = "Settings";
+      txt = AppLocalizations.of(context)!.appsetting;
     }
     return Scaffold(
       extendBody: true,

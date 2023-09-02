@@ -19,23 +19,11 @@ class My_theme {
         unselectedItemColor: Colors.grey,
       ));
   static ThemeData darkTheme = ThemeData(
-      colorScheme: ColorScheme(
-          brightness: Brightness.dark,
-          primary: darkprimarycolor,
-          onPrimary: yellowcolor,
-          secondary: Colors.white,
-          onSecondary: backycolor,
-          error: Colors.red,
-          onError: Colors.green,
-          background: darkprimarycolor,
-          onBackground: yellowcolor,
-          surface: Colors.black,
-          onSurface: Colors.white),
       appBarTheme: AppBarTheme(
         titleTextStyle: GoogleFonts.elMessiri(
             fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
         iconTheme: IconThemeData(color: darkprimarycolor),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0Xff5D9CEC),
         elevation: 0.0,
       ),
       textTheme: TextTheme(
@@ -46,11 +34,11 @@ class My_theme {
         bodySmall: GoogleFonts.elMessiri(
             fontSize: 20, fontWeight: FontWeight.bold, color: yellowcolor),
       ),
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: Color(0Xff060E1E),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         backgroundColor: darkprimarycolor,
-        selectedItemColor: yellowcolor,
+        selectedItemColor: primarycolor,
         unselectedItemColor: Colors.white,
       ));
 }
