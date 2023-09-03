@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/models/task_model.dart';
@@ -97,6 +98,7 @@ class _Add_bottomsheet_taskState extends State<Add_bottomsheet_task> {
                   Task_model task = Task_model(
                       tittle: tittleControler.text,
                       details: detailsControler.text,
+                      userId: FirebaseAuth.instance.currentUser!.uid,
                       date: DateUtils.dateOnly(selected_date)
                           .millisecondsSinceEpoch);
                   Firebase_function.add_task(task);

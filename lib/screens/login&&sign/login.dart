@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/layout/home_layout.dart';
+import 'package:todo/my%20provider.dart';
 import 'package:todo/screens/login&&sign/sign%20in.dart';
 import 'package:todo/shared/network/firebase/firebase_function.dart';
 import 'package:todo/shared/style/colors/app_color.dart';
@@ -12,6 +14,7 @@ class Login_screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<Login_provider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Form(
@@ -40,7 +43,7 @@ class Login_screen extends StatelessWidget {
                 controller: emailController,
                 validator: (value) {
                   final bool emailValid = RegExp(
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[gmail]+\.[a-zA-Z]+")
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[gmail]+\.[a-zA-Z]+")
                       .hasMatch(value!);
                   if (!emailValid) {
                     return "please enter your  valid email";
@@ -101,8 +104,9 @@ class Login_screen extends StatelessWidget {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Firebase_function.login(
-                            emailController.text, passwordController.text)
+                        emailController.text, passwordController.text)
                         .then((value) {
+                      pro.initUser();
                       Navigator.pushNamedAndRemoveUntil(
                           context, Home_layout.routeName, (route) => false);
                     });

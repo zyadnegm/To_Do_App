@@ -4,13 +4,15 @@ class Task_model {
   int date;
   String id;
   bool isdond;
+  String userId;
 
   Task_model(
       {required this.tittle,
       required this.details,
       required this.date,
       this.id = "",
-      this.isdond = false});
+      this.isdond = false,
+      required this.userId});
 
   Task_model.fromJson(Map<String, dynamic> json)
       : this(
@@ -18,7 +20,8 @@ class Task_model {
             tittle: json["tittle"],
             details: json["details"],
             date: json["date"],
-            isdond: json["isdond"]);
+            isdond: json["isdond"],
+            userId: json["userId"]);
 
   Map<String, dynamic> toJson() {
     return {
@@ -27,6 +30,7 @@ class Task_model {
       "details": details,
       "date": date,
       "isdond": isdond,
+      "userId": userId
     };
   }
 }

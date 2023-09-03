@@ -1,12 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo/models/task_model.dart';
+import 'package:todo/models/user_nodel.dart';
 
 class Firebase_function {
   static CollectionReference<Task_model> getTaskcollection() {
     return FirebaseFirestore.instance.collection("Tasks").withConverter(
       fromFirestore: (snapshot, _) {
         return Task_model.fromJson(snapshot.data()!);
+      },
+      toFirestore: (value, _) {
+        return value.toJson();
+      },
+    );
+  }
+
+  static CollectionReference<User_model> getUsercollection() {
+    return FirebaseFirestore.instance.collection("User").withConverter(
+      fromFirestore: (snapshot, _) {
+        return User_model.fromJson(snapshot.data()!);
       },
       toFirestore: (value, _) {
         return value.toJson();
@@ -23,6 +35,7 @@ class Firebase_function {
 
   static Stream<QuerySnapshot<Task_model>> get_task(DateTime date) {
     return getTaskcollection()
+        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where("date", isEqualTo: date.millisecondsSinceEpoch)
         .snapshots();
   }
@@ -52,13 +65,18 @@ class Firebase_function {
     }
   }
 
-  static Future<void> signup(String email, String password) async {
+  static Future<void> signup(
+      String email, String password, String name, int age) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      User_model user_model = User_model(name: name, email: email, age: age);
+      var collection = getUsercollection();
+      var decref = getUsercollection().doc(credential.user!.uid);
+      decref.set(user_model);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -68,5 +86,11 @@ class Firebase_function {
     } catch (e) {
       print(e);
     }
+  }
+
+  static Future<User_model?> readUser(String user_Id) async {
+    DocumentSnapshot<User_model> userdoc =
+        await getUsercollection().doc(user_Id).get();
+    return userdoc.data();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/my%20provider.dart';
+import 'package:todo/screens/login&&sign/login.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks/tasks.dart';
 
@@ -21,14 +22,27 @@ class _Home_layoutState extends State<Home_layout> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<MyProvider>(context);
+    var provider = Provider.of<Login_provider>(context);
     if (current_index == 1) {
       txt = AppLocalizations.of(context)!.appsetting;
     }
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: Text(txt),
+        actions: [
+          IconButton(
+              onPressed: () {
+                provider.initUser();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Login_screen.routeName, (route) => false);
+              },
+              icon: Icon(
+                Icons.output,
+                size: 30,
+                color: Colors.white,
+              ))
+        ],
+        title: Text(provider.user_model!.name),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(

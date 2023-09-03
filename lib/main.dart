@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,9 +19,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseFirestore.instance.disableNetwork();
-  runApp(ChangeNotifierProvider<MyProvider>(
-      create: (context) => MyProvider(), child: MyApp()));
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<Login_provider>(
+          create: (context) => Login_provider()),
+      ChangeNotifierProvider<MyProvider>(create: (context) => MyProvider())
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
+    var pro_login = Provider.of<Login_provider>(context);
     return MaterialApp(
       title: 'Localizations Sample App',
       localizationsDelegates: [
@@ -45,7 +51,9 @@ class MyApp extends StatelessWidget {
         Locale('ar'), // Spanish
       ],
       debugShowCheckedModeBanner: false,
-      initialRoute: Login_screen.routeName,
+      initialRoute: pro_login.firebaseuser != null
+          ? Home_layout.routeName
+          : Login_screen.routeName,
       routes: {
         Home_layout.routeName: (context) => Home_layout(),
         Edit_screen.routeName: (context) => Edit_screen(),

@@ -9,6 +9,8 @@ class SignIn_screen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var nameController = TextEditingController();
+  var ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class SignIn_screen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: nameController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -60,6 +63,7 @@ class SignIn_screen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: ageController,
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -150,7 +154,10 @@ class SignIn_screen extends StatelessWidget {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Firebase_function.signup(
-                            emailController.text, passwordController.text)
+                            emailController.text,
+                            passwordController.text,
+                            nameController.text,
+                            int.parse(ageController.text))
                         .then((value) {
                       Navigator.pushNamedAndRemoveUntil(
                           context, Login_screen.routeName, (route) => false);
