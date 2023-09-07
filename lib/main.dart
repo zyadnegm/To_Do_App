@@ -7,9 +7,9 @@ import 'package:todo/layout/home_layout.dart';
 import 'package:todo/my%20provider.dart';
 import 'package:todo/screens/Edit_screen.dart';
 import 'package:todo/screens/Example.dart';
-import 'package:todo/screens/login&&sign/login.dart';
-import 'package:todo/screens/login&&sign/sign%20in.dart';
+import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/settings.dart';
+import 'package:todo/screens/signIn/signIn.dart';
 import 'package:todo/shared/style/theming/my_theme.dart';
 
 import 'firebase_options.dart';
